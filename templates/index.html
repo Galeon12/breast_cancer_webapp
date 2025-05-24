@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Breast Cancer Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Breast Cancer Prediction</h2>
+        <form action="/predict" method="POST">
+            {% for feature in features %}
+                <div class="form-group">
+                    <label>{{ feature.replace('_', ' ').title() }}</label>
+                    <input type="number" step="any" name="{{ feature }}" required>
+                </div>
+            {% endfor %}
+            <div class="button-group">
+                <input type="submit" value="Predict">
+                <button type="reset">Clear</button>
+            </div>
+        </form>
+
+        {% if result %}
+            <div class="result">
+                <h3>Prediction: {{ result }}</h3>
+                {% if result == 'Benign (No Cancer)' %}
+                    <div class="positive">Good news! The prediction suggests no cancer.</div>
+                {% else %}
+                    <div class="negative">Please consult with a healthcare professional.</div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
